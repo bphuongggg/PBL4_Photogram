@@ -40,7 +40,7 @@ include "functions.php";
 			<a href="edit_privacy.php"><button class="button_edit">Privacy & Security</button></a>
 		</div>
 
-		<form action="" method="post">
+		<form action="" method="post" enctype="multipart/form-data">
 
 			<?php
 			if(isset($_POST['edit'])) {
@@ -67,12 +67,29 @@ include "functions.php";
 
 			}
 			}
+			if(isset($_POST['edit']))
+			{
+				require "connection.php";
+				// $image =  $mysqli->real_escape_string($_POST['file-input']);
+				// $sqlD = $mysqli->query("UPDATE users SET avatar = '$image' WHERE id = '".$_SESSION['id']."' ");
+				//if($sqlD){header("refresh: 2; url = edit_profile.php");}
+
+				$image = $_FILES['file-input']['name'];
+				$file_tmp = $_FILES['file-input']['tmp_name'];
+				$target = "images/".basename($image);
+				move_uploaded_file($_FILES['file-input']['tmp_name'], $target);
+				$sqlD = $mysqli->query("UPDATE users SET avatar = '$image' WHERE id = '".$_SESSION['id']."' ");
+
+				
+				
+			}
 			?>
 
 		<div class="e-right">
 			<div class="e-contenido">
 				<div class="e-title"><img src="images/<?php echo $rowA['avatar']; ?>" width="60"></div>
-				<div class="e-input"><?php echo $rowA['username']; ?><br><p>Thay đổi hình ảnh đại diện </p></div>
+				<div class="e-input"><?php echo $rowA['username']; ?><br><p>Thay đổi hình ảnh đại diện </p> </div>
+				<input type="file" name="file-input">
 			</div>
 			<div class="e-contenido">
 				<div class="e-title">name</div>

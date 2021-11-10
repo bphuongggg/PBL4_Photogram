@@ -146,6 +146,10 @@ include "functions.php";
   <div id="result" class=""><img id="imgSalida" width="600" /></div>
 </div>
 
+<div style="float: left; clear: both; margin-top: 30px; margin-bottom: 5px; margin-left: 24%;">
+  <textarea rows="3" cols="100%" name="vitri" placeholder="Mô tả vị trí"></textarea>
+</div>
+
 <div style="float: left; clear: both; margin-top: 30px; margin-bottom: 30px; margin-left: 24%;">
   <textarea rows="6" cols="100%" name="description" placeholder="Mô tả bài đăng"></textarea>
 </div>
@@ -167,6 +171,7 @@ if (isset($_POST['submit'])) {
 
   $filter = $mysqli->real_escape_string($_POST['filter']);
   $description = $mysqli->real_escape_string($_POST['description']);
+  $location = $mysqli->real_escape_string($_POST['vitri']);
 
     if(is_uploaded_file($_FILES['file-input']['tmp_name'])) { 
 
@@ -224,7 +229,7 @@ if (isset($_POST['submit'])) {
 
         if($_FILES['file-input']['tmp_name']) {
 
-          $queryp = $mysqli->query("INSERT INTO post (user,description,time) VALUES ('".$_SESSION['id']."','".$description."',now())");
+          $queryp = $mysqli->query("INSERT INTO post (user,description,loca,time) VALUES ('".$_SESSION['id']."','".$description."','".$location."',now())");
 
           $ultpub = $mysqli->query("SELECT id FROM post WHERE user = '".$_SESSION['id']."' ORDER BY id DESC LIMIT 1");
           $ultp = $ultpub->fetch_array();

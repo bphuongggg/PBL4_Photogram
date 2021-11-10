@@ -65,7 +65,7 @@ $mysqli->close();
 					</div>
 					<div class="hl-username">
 						<div class="hl-name"><a href="profile.php?username=<?php echo $rowB['username'];?>"><?php echo $rowB['username']; ?></a></div>
-						<div class="hl-location">location</div>
+						<div class="hl-location"><?php echo $rowA['loca'];?> <img src="images/icons/vitri.jpg" class="i-icon" width="20px" style="float: right;"></div>
 					</div>
 				</div>	
 				<div class="hl-middle">
@@ -87,6 +87,9 @@ $mysqli->close();
 						<div id="FAV<?php echo $rowA['id']; ?>" class="fav" style="float: left;"><img src="images/icons/favorito2.png"></div>
 					<?php } ?>
 
+				</div>
+				<div class="hl-bottom">
+					<strong><?php echo $rowA['likes']; ?>Likes</strong>
 				</div>	
 				<div class="hl-bottom">
 					<strong style="color: #262626;"><?php echo $rowB['username']; ?></strong> <?php echo $rowA['description']; ?>

@@ -59,7 +59,7 @@ if(!isset($_SESSION['login']) && $_SESSION['login'] == FALSE) {
     <form action="" method="post">
       <div class="l-part">
         <input type="text" placeholder="Enter the code" class="input" name="code" required />
-        <input type="submit" value="Confirm Email" class="btn" name="code" />
+        <input type="submit" value="Confirm Email" class="btn" name="submit" />
       </div>
     </form>
   </div>
