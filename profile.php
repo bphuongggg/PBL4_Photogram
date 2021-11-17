@@ -15,7 +15,10 @@ include "functions.php";
     <meta name="title" content="Photogram">
     <meta name="description" content="Photogram">    
     <link href="css/style.css" rel="stylesheet" type="text/css"/>  
-    <link href="css/instagram.css" rel="stylesheet" type="text/css"/>   
+    <link href="css/instagram.css" rel="stylesheet" type="text/css"/> 
+	<link href="css/image.css" rel="stylesheet" type="text/css"/>  
+	<script src="js/imagehover.js"></script>
+	
   </head>  
   <body>   
 
@@ -59,10 +62,12 @@ include "functions.php";
 	  		}
   		}
   	?>
+	
+	
 
 <?php include "header.php"; ?>
 
-<div class="h-content">
+<div class="h-content" style="width: 80%; height:auto;">
 	
 	<div class="p-top">
 		<div class="p-foto"><img src="images/<?php echo $rowA['avatar'];?>" width="180" height="180"></div>
@@ -97,7 +102,7 @@ include "functions.php";
 		<div class="p-location">Danang, VietNam</div>
 		<div class="p-description"><?php echo $rowA['story'];?></div>
 	</div>
-
+	<form action="delimage.php" method="POST">
 	<div class="p-mid">
 
 		<?php 
@@ -110,16 +115,27 @@ include "functions.php";
 		while($rowC = $sqlB->fetch_array()) {
 			$sqlD = $mysqli->query("SELECT * FROM portdetail WHERE post = '".$rowC['id']."'");
 			$rowD = $sqlD->fetch_array();
+			// $sqlL = $mysqli->query("SELECT * FROM portdetail WHERE post = '".$_GET['id']."'");
+			
+  			
 		?>
-			<div class="p-pub <?php echo $rowD['filter']; ?>" style="background-image: url('postdetail/<?php echo $rowD['img']; ?>');"></div>
+		<figure class="snip1573" <?php echo $rowD['filter']; ?>>
+		<img src="postdetail/<?php echo $rowD['img']; ?>" width="300px", height="300px" />
+			<figcaption>
+				<h3>Delete image</h3>
+			</figcaption>
+			<a href="delimage.php?id=<?php echo $rowD['id']; ?>"></a>
+			
+		</figure>
+		
 		<?php } ?>
 
 		<?php } ?>
-
 
 	</div>
-
+	</form>	
 </div>
+
 
 <?php } ?>
 

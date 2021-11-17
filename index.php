@@ -14,13 +14,22 @@ if(isset($_SESSION['login']) && $_SESSION['login'] == TRUE) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css" type="text/css">
+  <style>
+    body{
+      background-image: url('images/photoss.jpg');
+    }
+    .w-right{
+      float: left;
+      margin-left: 255px;
+    }
+  </style>
 </head>
 
 <body>
 
   <div id="wrapper">
 
-    <div class="w-left"><img src="images/celulares.png"></div>
+    <!-- <div class="w-left"><img src="images/celulares.png"></div> -->
 
     <div class="w-right">
 
@@ -85,7 +94,7 @@ if(isset($_SESSION['login']) && $_SESSION['login'] == TRUE) {
             <input type="text" placeholder="username" class="input" name="username" autocomplete="off" />
             <div class="overlap-text">
               <input type="password" placeholder="password" class="input" name="password" />
-              <a href="olvidocontrasena.php">Forget?</a>
+              <a href="forgetpassword.php">Forget?</a>
             </div>
             <input type="submit" value="Enter" class="btn" name="enter" />
           </form>
@@ -98,7 +107,7 @@ if(isset($_SESSION['login']) && $_SESSION['login'] == TRUE) {
         </div>
       </div>
 
-      <center><img src="images/appstores.png"></center>
+      <!-- <center><img src="images/appstores.png"></center> -->
 
     </div>
 

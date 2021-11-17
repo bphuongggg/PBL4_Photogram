@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
   require "connection.php";
 
   $imagen = $_FILES['file-input']['tmp_name'];   
-  $image_kind = exif_imagetype($_FILES['file-input']['tmp_name']);
+  $image_kind = exif_imagetype($_FILES['file-input']['tmp_name']); // ham tra ve loai tep ko xac dinh
 
   if ($image_kind == IMAGETYPE_PNG OR $image_kind == IMAGETYPE_JPEG OR $image_kind == IMAGETYPE_BMP) {
 

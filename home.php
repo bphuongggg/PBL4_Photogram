@@ -69,7 +69,9 @@ $mysqli->close();
 					</div>
 				</div>	
 				<div class="hl-middle">
+					<a href="postdetail/<?php echo $rowC['img']; ?>">
 					<img src="postdetail/<?php echo $rowC['img']; ?>" width="100%" class="<?php echo $rowC['filter']; ?>">
+					</a>
 				</div>	
 				<div class="hl-section-likes">
 

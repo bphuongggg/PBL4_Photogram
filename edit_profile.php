@@ -77,6 +77,7 @@ include "functions.php";
 				$image = $_FILES['file-input']['name'];
 				$file_tmp = $_FILES['file-input']['tmp_name'];
 				$target = "images/".basename($image);
+				//di chuyen tep den thu muc can images
 				move_uploaded_file($_FILES['file-input']['tmp_name'], $target);
 				$sqlD = $mysqli->query("UPDATE users SET avatar = '$image' WHERE id = '".$_SESSION['id']."' ");
 
