@@ -19,6 +19,7 @@ include "functions.php";
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="js/likes.js"></script>
     <script src="js/favorite.js"></script>
+	
   </head>  
   <body>   
 
@@ -36,9 +37,11 @@ if($row['confirmed'] == 0) {
 $mysqli->close();
 ?> 
 
+
 <?php include "header.php"; ?>
 
 <div class="h-content">
+
 	<div class="h-left">
 
 		<?php
@@ -56,8 +59,13 @@ $mysqli->close();
 
 			$countLikes2 = $mysqli->query("SELECT * FROM favorite WHERE nameacc = '".$_SESSION['id']."' AND post = '".$rowA['id']."'");
 			$cLikes2 = $countLikes2->num_rows;
-		?>
 
+			// $countCmt = $mysqli->query("SELECT * FROM `comments` JOIN `post` ON `comments`.`post` = `post`.`id` JOIN `users` ON `comments`.`nameacc` = `users`.`id` WHERE `post`.`id` = '".$rowA['id']."'");
+			// $rowCmt = $countCmt->fetch_array();
+			//$com = $countCmt->num_rows;
+		?>
+		
+		
 			<div class="hl-cont">
 				<div class="hl-top">
 					<div class="hl-profile">
@@ -73,6 +81,7 @@ $mysqli->close();
 					<img src="postdetail/<?php echo $rowC['img']; ?>" width="100%" class="<?php echo $rowC['filter']; ?>">
 					</a>
 				</div>	
+				
 				<div class="hl-section-likes">
 
 					<?php if($cLikes == 0) { ?>
@@ -81,9 +90,9 @@ $mysqli->close();
 						<div id="<?php echo $rowA['id']; ?>" class="like" style="float: left; cursor: pointer;"><img src="images/icons/cora2.png"></div>
 					<?php } ?>
 
-					<div style="float: left;"><img src="images/icons/comentario.png"></div>
+					<div style="float: left;"><img src="images/icons/comentario.png"></div></button>
 
-					<?php if($cLikes == 0) { ?>
+					<?php if($cLikes2 == 0) { ?>
 						<div id="FAV<?php echo $rowA['id']; ?>" class="fav" style="float: left;"><img src="images/icons/favorito.png"></div>
 					<?php } else { ?>
 						<div id="FAV<?php echo $rowA['id']; ?>" class="fav" style="float: left;"><img src="images/icons/favorito2.png"></div>
@@ -95,11 +104,51 @@ $mysqli->close();
 				</div>	
 				<div class="hl-bottom">
 					<strong style="color: #262626;"><?php echo $rowB['username']; ?></strong> <?php echo $rowA['description']; ?>
-				</div>			
+				</div>	
+				<div class="">
+					<?php
+						$showComment = getComment($rowA['id']);
+						if(!empty($showComment) ):
+							foreach ($showComment as $comm):
+									
+					?>
+				<div>
+					<a href="profile.php?username=<?=$comm['username'];?>"><img src="images/<?=GetData($comm['id'],'avatar'); ?>" width="30" height="35"></a>
+						<div style="display: inline-block; position: absolute;"><strong><?=$comm['username'];?></strong>
+							<p><?=$comm['content'];?></p>
+						</div>
+				</div>
+					<label style="color: #999999; font-size: small;"><?=$comm['timeCmt']; ?></label>
+					
+					<?php
+						$showProfile = getProfile($comm['username']);
+						if(!empty($showProfile) ):
+							foreach ($showProfile as $pro):
+							if(isset($_SESSION['username'])){
+								if($_SESSION['username'] == $pro['username']): ?>
+								<a style="color: brown; float: right; text-decoration: none;" href="comments.php?action=deleteCmt&idDel=<?=$comm['commentid']?>&idpost=<?=$comm['post'] ?> ">Xóa</a>
+						<?php endif; ?>
+
+						<?php } endforeach; endif ?>
+
+					<?php endforeach; endif ?>
+				</div>
+				
+				<form action="comments.php?action=comment&id=<?php echo $rowA['id']; ?>" method="POST">
+					<div style="float: left; clear: both; margin-top: 5px;">
+						<a href="profile.php?username=<?php echo $_SESSION['username'];?>"><img src="images/<?php GetData($_SESSION['id'],'avatar'); ?>" width="30" height="30"></a>
+						<textarea rows="2" cols="65%" name="commentss" placeholder="Bình luận" style="background-color: lightgray; border-radius: 10px;"></textarea>
+
+						<button class="button_blue" name="submit" type="submit" style="float: right;">Comment</button></a>
+						
+					</div>	
+				</form>
+
 			</div>
-
+			
+			
 		<?php } ?>
-
+		
 	</div>
 
 
@@ -123,7 +172,6 @@ $mysqli->close();
 	</div>
 </div>
 
-
-
+	
   </body>  
 </html>
