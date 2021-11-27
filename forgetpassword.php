@@ -37,8 +37,7 @@
 	        $email_message = "Xin chào " . $row['username'] . ",Bạn đã yêu cầu thay đổi mật khẩu của mình, hãy nhập liên kết sau\n\n";
 	        $email_message .= "http://localhost:8080/myphotogram/photogram/newpassword.php?user=".$row['username']."&token=".$token."\n\n";
 
-
-	        // Ahora se envía el e-mail usando la función mail() de PHP
+			
 	        $headers = 'From: '.$email_from."\r\n".
 	        'Reply-To: '.$email_from."\r\n" .
 	        'X-Mailer: PHP/' . phpversion();
