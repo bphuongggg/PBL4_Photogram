@@ -41,28 +41,31 @@ include "functions.php";
   		$totalSe = $sqlD->num_rows;
 
   		$yaExiste = $mysqli->query("SELECT * FROM followers WHERE follower = '".$_SESSION['id']."'");
+		$rowT1 = $yaExiste->fetch_array();
   		$yaEnviaste = $yaExiste->num_rows;
 
-  		$yaAprobo = $mysqli->query("SELECT * FROM followers WHERE follower = '".$_SESSION['id']."' AND approved = 1");
+  		$yaAprobo = $mysqli->query("SELECT * FROM followers WHERE follower = '".$_SESSION['id']."' AND follow  = '".$rowA['id']."' AND approved = 1");
+		$rowT2 = $yaAprobo->fetch_array();
   		$tAprobo = $yaAprobo->num_rows;
 
+		
   	?>
-
+	
   	<?php 
   		if(isset($_GET['connect'])) {
   			require "connection.php";
 
-  			if($yaEnviaste > 0) {echo "You have already sent a request to this user ";} else {
+  			if(!$yaEnviaste > 0) {echo "You have already sent a request to this user ";} else {
 
 	  			if($rowA['private_profile'] == 1) {$approve = 0;} else {$approve = 1;}
 
 	  			$sqlG = $mysqli->query("INSERT INTO followers (follower,follow,approved,time) VALUES ('".$_SESSION['id']."','".$rowA['id']."','$approve',now())");
 
 	  			if($sqlG) {header("Location: profile.php?username=".$_GET['username']."");}
-	  		}
+			  }
   		}
   	?>
-	
+		
 	
 
 <?php include "header.php"; ?>
@@ -81,17 +84,27 @@ include "functions.php";
 			<div class="p-config"><img src="images/icons/opciones.png"></div>
 			<?php } else { ?>
 
-			<?php if($tAprobo == 0) { ?>
-
-				<?php if($yaEnviaste > 0) { ?>
-					<div class="p-editar"><button class="button_blue">Request sent</button></div>
-				<?php } else { ?>
+					
+						<?php if($tAprobo > 0) { ?>
+						<form method="POST" action="unfollow.php?delid=<?php echo $rowT2['id']; ?>&user=<?php echo $rowA['username'];?>">
+						<div class="p-editar"><button class="button_blue" onclick="deleteme(<?php echo $rowT2['id']; ?>)">UnFollow</button></div>
+						<script>
+							function deleteme(delid){
+								if(confirm("Do you want UnFollow?")){
+									window.location.href='unfollow.php?delid='+ delid+'&user=<?php echo $rowA['username'];?>';
+									return true;
+								}
+							}
+						</script>
+						</form>
+				<?php }  else { ?>
 					<a href="?connect=connect&username=<?php echo $_GET['username']; ?>"><div class="p-editar"><button class="button_blue">Follow</button></div></a>
-				<?php } ?>
+					
+					<?php } ?>
+	
 
 			<?php } ?>
-
-			<?php } ?>
+					
 		</div>
 		<div class="p-info">
 			<div class="p-infor"><b><?php echo $totalp; ?></b> post</div>
@@ -119,15 +132,37 @@ include "functions.php";
 			
   			
 		?>
-		<figure class="snip1573" <?php echo $rowD['filter']; ?>>
-		<img src="postdetail/<?php echo $rowD['img']; ?>" width="300px", height="300px" />
-			<figcaption>
-				<h3>Delete image</h3>
-			</figcaption>
-			<a href="delimage.php?id=<?php echo $rowD['id']; ?>"></a>
-			
-		</figure>
+		<?php
+			$showProfile = getProfile($rowA['username']);
+			if(!empty($showProfile) ):
+				foreach ($showProfile as $pro):
+				if(isset($_SESSION['username'])){
+					if($_SESSION['username'] == $pro['username']): ?>
+					<figure class="snip1573" <?php echo $rowD['filter']; ?>>
+						<img src="postdetail/<?php echo $rowD['img']; ?>" width="300px", height="300px" />
+							<figcaption>
+								<h3>Delete image</h3>
+							</figcaption>
+							<a href="delimage.php?id=<?php echo $rowD['id']; ?>"></a>
+							
+					</figure>
+				<?php endif; ?>
+
+		<?php } endforeach; endif ?>
+
+		<?php
+			$showProfile = getProfile($rowA['username']);
+			if(!empty($showProfile) ):
+				foreach ($showProfile as $pro):
+				if(isset($_SESSION['username'])){
+					if($_SESSION['username'] != $pro['username']): ?>
+					
+						<div class="p-pub"><?php echo $rowD['filter']; ?><img src="postdetail/<?php echo $rowD['img']; ?>" width="300px", height="300px" /></div>
 		
+					<?php endif; ?>
+
+		<?php } endforeach; endif ?>
+
 		<?php } ?>
 
 		<?php } ?>
