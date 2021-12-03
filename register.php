@@ -18,6 +18,17 @@ if(isset($_SESSION['login']) && $_SESSION['login'] == TRUE) {
     body{
       background-image: url('images/photoss.jpg');
     }
+    #wrapper center{
+      padding: 5px;
+      background-color: lightblue;
+      width: 50%;
+      margin-left: 25%;
+    }
+    #wrapper p{
+      padding: 5px;
+      background-color: lightpink;
+      width: auto;
+    }
   </style>
 </head>
  
@@ -46,11 +57,11 @@ if(isset($_SESSION['login']) && $_SESSION['login'] == TRUE) {
     $numemail = $resultemail->num_rows;
 
     if($numemail>0) {
-      echo "Email này đã được đăng ký, hãy thử một email khác ";
+      echo "<center>Email này đã được đăng ký, hãy thử một email khác</center> ";
     }
 
     elseif($numname>0) {
-      echo "Tên người dùng này đã tồn tại ";
+      echo "<center>Tên người dùng này đã tồn tại</center> ";
     }
 
     else {
@@ -63,7 +74,7 @@ if(isset($_SESSION['login']) && $_SESSION['login'] == TRUE) {
 
         Header("Refresh: 2; URL=index.php");
 
-        echo "Xin chúc mừng $username đã được đăng ký thành công, chúng tôi đã gửi cho bạn một email xác nhận. ";
+        echo "<p>Xin chúc mừng $username đã được đăng ký thành công, chúng tôi đã gửi cho bạn một email xác nhận. <p>";
 
         
         $email_to = $email;

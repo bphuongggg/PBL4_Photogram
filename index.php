@@ -22,6 +22,11 @@ if(isset($_SESSION['login']) && $_SESSION['login'] == TRUE) {
       float: left;
       margin-left: 255px;
     }
+    .w-right center p{
+      padding: 5px;
+      background-color: lightblue;
+      width: 70%;
+    }
   </style>
 </head>
 
@@ -35,7 +40,9 @@ if(isset($_SESSION['login']) && $_SESSION['login'] == TRUE) {
 
       <?php
       if(isset($_GET['error'])) {
-        echo "<center>Username or password is incorrect </center>";
+        echo "<center>
+        <p> Username or password is incorrect <p>
+         </center>";
       }
       ?>
 
